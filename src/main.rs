@@ -1,3 +1,5 @@
+use minifemme::{LevelFilter, LogMode};
+
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -11,7 +13,7 @@ fn usage() {
 }
 
 fn main() {
-    minifemme::start(minifemme::LevelFilter::Trace, minifemme::LogMode::Pretty);
+    minifemme::start(LevelFilter::Trace, LogMode::Pretty);
 
     let args: Vec<String> = env::args().map(|arg| arg.to_string()).collect();
 

@@ -1,5 +1,3 @@
-// use kv_log_macro as log;
-
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -30,7 +28,7 @@ fn main() {
         }
     }
 
-    let contents = match fs::read_to_string(path) {
+    let _contents = match fs::read_to_string(path) {
         Ok(v) => v,
         Err(e) => {
             log::error!("Error reading file: {e}");
@@ -39,6 +37,4 @@ fn main() {
     };
 
     log::info!("Read file contents.");
-
-    println!("{contents}");
 }

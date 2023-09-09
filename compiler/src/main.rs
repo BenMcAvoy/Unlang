@@ -11,7 +11,6 @@ use crate::lexer::Lexer;
 
 mod errors;
 mod parser;
-mod query;
 mod lexer;
 mod asm;
 

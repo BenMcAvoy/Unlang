@@ -1,12 +1,11 @@
 use std::process;
 
-use crate::query::query;
-
 #[derive(Default, Debug, PartialEq, Clone)]
 pub enum TokenKind {
     #[default]
     Exit,
 
+    Echo,
     IntLit,
     Semi,
 }
@@ -37,7 +36,7 @@ impl Lexer {
             if self.peek(1).unwrap().is_alphabetic() {
                 buf.push(self.consume());
 
-                while self.peek(1).unwrap().is_alphanumeric() {
+                while self.peek(1).is_some() && self.peek(1).unwrap().is_alphanumeric() {
                     buf.push(self.consume());
                 }
 
@@ -51,13 +50,21 @@ impl Lexer {
 
                     buf.clear();
                     continue;
+                }
+
+                if &accumulated == "echo" {
+                    tokens.push(Token { kind: TokenKind::Echo, value: None });
+
+                    buf.clear();
+                    continue;
                 } else {
                     log::warn!("Accumulated: \"{accumulated}\"");
-                    log::error!("Temporary error. Something went wrong.");
 
-                    if query("Do you want to display a debug of the buffer?") {
-                        dbg!(&buf);
-                    }
+                    let source = self.source.iter().map(|a| a.to_string()).collect::<String>();
+                    let lookup = line_col::LineColLookup::new(&source);
+                    let (line, column) = lookup.get(self.index as usize);
+
+                    log::error!("Unrecongnised token at {line}:{column}");
 
                     process::exit(-1);
                 }

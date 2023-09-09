@@ -60,6 +60,7 @@
     )
   ],
   cell(height: 100%)[
+    #set align(center)
     #rect[`exit()`]
     $arrow.b$
     #rect[`[expr]`]

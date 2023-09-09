@@ -121,6 +121,42 @@ fn main() {
                 true => log::info!("Compilation succeeded:\n{}", stdout),
                 false => log::error!("Compilation failed:\n{}", stdout),
             }
+
+            // TODO: Use package name
+            let mut nasm = SystemCommand::new("nasm");
+            nasm.arg("-felf64");
+            nasm.arg("build/out.asm");
+
+            let mut ld = SystemCommand::new("ld");
+            ld.arg("build/out.o");
+            ld.arg("-o");
+            ld.arg("build/main");
+
+            let mut main = SystemCommand::new("./build/main");
+
+            let output = nasm.output().expect("Failed to run nasm.");
+            let stdout = String::from_utf8_lossy(&output.stdout);
+
+            match output.status.success() {
+                true => log::info!("Nasm succeeded"),
+                false => log::error!("Nasm failed:\n{}", stdout),
+            }
+
+            let output = ld.output().expect("Failed to run ld.");
+            let stdout = String::from_utf8_lossy(&output.stdout);
+
+            match output.status.success() {
+                true => log::info!("LD succeeded"),
+                false => log::error!("LD failed:\n{}", stdout),
+            }
+
+            let output = main.output().expect("Failed to run main.");
+            let stdout = String::from_utf8_lossy(&output.stdout);
+
+            match output.status.success() {
+                true => log::info!("Main succeeded:\n{}", stdout),
+                false => log::error!("Main failed:\n{}", stdout),
+            }
         }
     }
 }

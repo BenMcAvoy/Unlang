@@ -102,15 +102,24 @@ fn main() {
                 }
             };
 
+            let dir = dir.join("build/");
+
+            if fs::create_dir_all(&dir).is_err() {
+                log::error!("Failed to create the project. Do you have the correct permissions?");
+                process::exit(-1);
+            }
+
             let mut compiler = SystemCommand::new("unlang");
-            compiler.arg("src/main.ul");
-            compiler.current_dir(dir);
+            compiler.arg("../src/main.ul");
+            compiler.current_dir(&dir);
 
             let output = compiler.output().expect("Failed to run compiler.");
 
-            if output.status.success() {
-                let stdout = String::from_utf8_lossy(&output.stdout);
-                println!("Compilation succeeded:\n{}", stdout);
+            let stdout = String::from_utf8_lossy(&output.stdout);
+
+            match output.status.success() {
+                true => log::info!("Compilation succeeded:\n{}", stdout),
+                false => log::error!("Compilation failed:\n{}", stdout),
             }
         }
     }

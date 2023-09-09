@@ -52,8 +52,6 @@ fn main() {
         }
     };
 
-    log::info!("Read file contents.");
-
     let mut lexer = Lexer::new(contents);
     let asm = tokens_to_asm(lexer.tokenize());
 

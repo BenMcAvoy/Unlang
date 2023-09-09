@@ -34,9 +34,11 @@ impl Parser {
 
                 if let Some(expr) = self.parse_expr() {
                     return Ok(node::Exit { expr });
-                } else {
-                    return Err(ParseError::InvalidExpression)
                 }
+            } else if token.kind == TokenKind::Semi {
+                self.consume();
+            } else {
+                return Err(ParseError::InvalidExpression)
             }
         }
 

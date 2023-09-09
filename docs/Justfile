@@ -1,0 +1,2 @@
+recompile:
+  typst compile ./grammar.typ ./pdf/grammar.pdf

@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+line-col = "0.2.1"
 log = "0.4.20"
 minifemme = "1.0.3"
 thiserror = "1.0.48"

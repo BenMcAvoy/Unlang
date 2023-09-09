@@ -7,7 +7,6 @@ use std::process;
 use std::env;
 use std::fs;
 
-use crate::asm::tokens_to_asm;
 use crate::lexer::Lexer;
 
 mod errors;

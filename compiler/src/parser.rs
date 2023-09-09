@@ -1,13 +1,58 @@
-use crate::lexer::Token;
+use crate::errors::ParseError;
+
+use crate::lexer::{Token, TokenKind};
 
 pub struct Parser {
     tokens: Vec<Token>,
     index: i32,
 }
 
+pub mod node {
+    use crate::lexer::Token;
+
+    #[derive(Default)]
+    pub struct Expr {
+        pub int_lit: Token,
+    }
+
+    #[derive(Default)]
+    pub struct Exit {
+        pub expr: self::Expr,
+    }
+}
+
 impl Parser {
     pub fn new(tokens: Vec<Token>) -> Self {
         Self { tokens, index: 0 }
+    }
+
+    pub fn parse(&mut self) -> Result<node::Exit, ParseError> {
+        while let Some(token) = self.peek(1) {
+            if token.kind == TokenKind::Exit {
+                // Dump value out of tokens
+                self.consume();
+
+                if let Some(expr) = self.parse_expr() {
+                    let exit_node = node::Exit { expr };
+                } else {
+                    return Err(ParseError::InvalidExpression)
+                }
+            }
+        }
+
+        self.index = 0;
+
+        Err(ParseError::Unknown)
+    }
+
+    fn parse_expr(&mut self) -> Option<node::Expr> {
+        if let Some(token) = self.peek(1) {
+            if token.kind == TokenKind::IntLit {
+                return Some(node::Expr { int_lit: self.consume() })
+            }
+        }
+
+        None
     }
 
     fn peek(&self, ahead: i32) -> Option<Token> {

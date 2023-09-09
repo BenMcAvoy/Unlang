@@ -64,7 +64,7 @@ impl Lexer {
             } else if self.peek(1).unwrap().is_digit(10) {
                 buf.push(self.consume());
 
-                while self.peek(1).unwrap().is_digit(10) {
+                while self.peek(1).is_some() && self.peek(1).unwrap().is_digit(10) {
                     buf.push(self.consume());
                 }
 

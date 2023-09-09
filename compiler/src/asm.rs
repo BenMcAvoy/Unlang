@@ -1,4 +1,4 @@
-use crate::{lexer::{Token, TokenKind}, parser::node};
+use crate::{lexer::{Token, TokenKind}, parser::node, errors::ParseError};
 use std::fmt::Write;
 
 pub struct Generator {
@@ -16,9 +16,15 @@ impl Generator {
         asm.push_str("global _start\n");
         asm.push_str("_start:\n");
 
-        // TODO: Don't use raw unwrap here.
+        let expr_value = match &self.root.expr.int_lit.value {
+            Some(v) => v,
+            None => {
+                return Err(Box::new(ParseError::InvalidExpression))
+            }
+        };
+
         write!(asm, "    mov rax, 60\n")?;
-        write!(asm, "    mov rdi, {}\n", self.root.expr.int_lit.value.unwrap())?;
+        write!(asm, "    mov rdi, {}\n", expr_value)?;
         write!(asm, "    syscall\n")?;
 
         Ok(asm)

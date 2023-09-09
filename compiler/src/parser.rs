@@ -33,7 +33,7 @@ impl Parser {
                 self.consume();
 
                 if let Some(expr) = self.parse_expr() {
-                    let exit_node = node::Exit { expr };
+                    return Ok(node::Exit { expr });
                 } else {
                     return Err(ParseError::InvalidExpression)
                 }

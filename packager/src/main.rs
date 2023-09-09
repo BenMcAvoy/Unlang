@@ -110,10 +110,7 @@ fn main() {
 
             if output.status.success() {
                 let stdout = String::from_utf8_lossy(&output.stdout);
-                println!("Command executed successfully. Output:\n{}", stdout);
-            } else {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                println!("Command failed. Error:\n{}", stderr);
+                println!("Compilation succeeded:\n{}", stdout);
             }
         }
     }

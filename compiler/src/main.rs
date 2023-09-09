@@ -8,6 +8,7 @@ use std::fs;
 use crate::asm::tokens_to_asm;
 use crate::lexer::Lexer;
 
+mod errors;
 mod parser;
 mod query;
 mod lexer;

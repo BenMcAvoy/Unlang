@@ -55,5 +55,5 @@ fn main() {
     let mut lexer = Lexer::new(contents);
     let asm = tokens_to_asm(lexer.tokenize());
 
-    println!("{asm}");
+    println!("{}", asm.unwrap());
 }

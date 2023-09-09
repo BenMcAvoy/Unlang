@@ -70,11 +70,11 @@ fn main() {
         let config = path.join("Unpack.toml");
         let main = path.join("src/main.ul");
 
-        if fs::write(main, "return 0;\0").is_err() {
+        if fs::write(main, "return 0;\n").is_err() {
             log::error!("Failed to create `main.ul`");
         }
 
-        if fs::write(config, "[package]\0").is_err() {
+        if fs::write(config, "[package]\n").is_err() {
             log::error!("Failed to create `Unpack.toml`");
         }
 

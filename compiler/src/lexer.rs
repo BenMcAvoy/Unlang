@@ -2,7 +2,7 @@ use std::process;
 
 use crate::query::query;
 
-#[derive(Default, Debug, PartialEq)]
+#[derive(Default, Debug, PartialEq, Clone)]
 pub enum TokenKind {
     #[default]
     Exit,
@@ -11,7 +11,7 @@ pub enum TokenKind {
     Semi,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub struct Token {
     pub kind: TokenKind,
     pub value: Option<String>,
@@ -108,7 +108,6 @@ impl Lexer {
     fn consume(&mut self) -> char {
         self.index += 1;
 
-        // log::debug!("{}", self.source[(self.index - 1) as usize]);
         return self.source[(self.index - 1) as usize];
     }
 }

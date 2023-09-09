@@ -74,7 +74,7 @@ fn main() {
             log::error!("Failed to create `main.ul`");
         }
 
-        if fs::write(config, "return 0;").is_err() {
+        if fs::write(config, "[package]").is_err() {
             log::error!("Failed to create `Unpack.toml`");
         }
 

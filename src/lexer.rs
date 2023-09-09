@@ -2,7 +2,7 @@ use std::process;
 
 use crate::query::query;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub enum TokenKind {
     #[default]
     Exit,

@@ -1,9 +1,9 @@
 use minifemme::{LevelFilter, LogMode};
 
+use std::path::{PathBuf, Path};
+use std::process;
 use std::env;
 use std::fs;
-use std::path::Path;
-use std::process;
 
 use crate::asm::tokens_to_asm;
 use crate::lexer::Lexer;
@@ -55,5 +55,5 @@ fn main() {
     let mut lexer = Lexer::new(contents);
     let asm = tokens_to_asm(lexer.tokenize());
 
-    println!("{}", asm.unwrap());
+    fs::write(PathBuf::from("./out.asm"), asm.unwrap()).unwrap();
 }

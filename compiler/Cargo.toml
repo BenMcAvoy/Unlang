@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 log = "0.4.20"
 minifemme = "1.0.3"
+thiserror = "1.0.48"

@@ -1,4 +1,6 @@
+use asm::Generator;
 use minifemme::{LevelFilter, LogMode};
+use parser::Parser;
 
 use std::path::{PathBuf, Path};
 use std::process;
@@ -55,7 +57,25 @@ fn main() {
     };
 
     let mut lexer = Lexer::new(contents);
-    let asm = tokens_to_asm(lexer.tokenize());
+    let mut parser = Parser::new(lexer.tokenize());
 
-    fs::write(PathBuf::from("./out.asm"), asm.unwrap()).unwrap();
+    let tree = match parser.parse() {
+        Ok(v) => v,
+        Err(e) => {
+            log::error!("Error: {e}");
+            process::exit(-1);
+        }
+    };
+
+    let mut generator = Generator::new(tree);
+
+    let asm = match generator.generate() {
+        Ok(v) => v,
+        Err(e) => {
+            log::error!("Error: {e}");
+            process::exit(-1);
+        }
+    };
+
+    fs::write(PathBuf::from("./out.asm"), asm).unwrap();
 }

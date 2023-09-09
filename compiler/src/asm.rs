@@ -18,7 +18,7 @@ pub fn tokens_to_asm(tokens: Vec<Token>) -> Result<String, Box<dyn std::error::E
 
                     write!(asm, "    mov rax, 60\n")?;
                     write!(asm, "    mov rdi, {}\n", code)?;
-                    write!(asm, "    syscall")?;
+                    write!(asm, "    syscall\n")?;
                 }
             }
         }

@@ -7,15 +7,14 @@ pub enum TokenKind {
     #[default]
     Exit,
 
-    Return,
     IntLit,
     Semi,
 }
 
 #[derive(Default, Debug)]
 pub struct Token {
-    kind: TokenKind,
-    value: Option<String>,
+    pub kind: TokenKind,
+    pub value: Option<String>,
 }
 
 pub struct Lexer {

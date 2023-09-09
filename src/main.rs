@@ -5,10 +5,12 @@ use std::fs;
 use std::path::Path;
 use std::process;
 
+use crate::asm::tokens_to_asm;
 use crate::lexer::Lexer;
 
 mod query;
 mod lexer;
+mod asm;
 
 /// Print out the program usage
 fn usage() {
@@ -53,6 +55,7 @@ fn main() {
     log::info!("Read file contents.");
 
     let mut lexer = Lexer::new(contents);
+    let asm = tokens_to_asm(lexer.tokenize());
 
-    dbg!(lexer.tokenize());
+    println!("{asm}");
 }

@@ -5,6 +5,11 @@ use std::fs;
 use std::path::Path;
 use std::process;
 
+use crate::lexer::Lexer;
+
+mod query;
+mod lexer;
+
 /// Print out the program usage
 fn usage() {
     log::error!("Incorrect usage. Correct usage is:");
@@ -37,7 +42,7 @@ fn main() {
     }
 
     // Read file contents
-    let _contents = match fs::read_to_string(path) {
+    let contents = match fs::read_to_string(path) {
         Ok(v) => v,
         Err(e) => {
             log::error!("Error reading file: {e}");
@@ -46,4 +51,8 @@ fn main() {
     };
 
     log::info!("Read file contents.");
+
+    let mut lexer = Lexer::new(contents);
+
+    dbg!(lexer.tokenize());
 }
